@@ -1,4 +1,4 @@
-Simple and lightweight speed typing test
+Simple and lightweight typing speed test
 
 ## Usage
 ```sh
