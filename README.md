@@ -3,7 +3,7 @@ Simple and lightweight typing speed test
 ## Usage
 ```sh
 git clone https://github.com/Etsor/SnakeType
-cd SnakeType
+cd Snaketype
 pip install -r requirements.txt
 python3 snaketype.py
 ```
