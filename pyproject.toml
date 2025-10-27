@@ -1,0 +1,27 @@
+[project]
+name = "snaketype"
+version = "1.0.0"
+description = "CLI typing speed test"
+readme = "README.md"
+license = "MIT"
+authors = [
+  { name = "Etsor"},
+]
+requires-python = ">=3.10"
+dependencies = [
+  "requests",
+  "pytermcolors"
+]
+
+[project.scripts]
+snaketype = "snaketype.main:main"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
