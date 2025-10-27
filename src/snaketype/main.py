@@ -6,9 +6,14 @@ import sys
 from .ui import print_result, print_words
 from .fallback import get_fallback_words
 from .core import EvaluationResult, evaluate
-
+from .filemanager import save_result
+from .utils import has_arg
 
 def main() -> None:
+    save_res: bool = True
+    if has_arg("-ws") or has_arg("--without-saving"):
+        save_res = False
+
     words_count: int = int(input("Enter words count (1-30): "))
     if words_count < 1 or words_count > 30:
         print("Invalid count of words")
@@ -34,6 +39,9 @@ def main() -> None:
     ev_res: EvaluationResult = evaluate(words, typed_words, spent_time)
     print_result(ev_res)
     print()
+
+    if save_res:
+        save_result(ev_res)
 
 
 if __name__ == "__main__":

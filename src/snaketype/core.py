@@ -1,5 +1,7 @@
 from typing import List
 from dataclasses import dataclass, field
+import json
+from filemanager import RESULTS_DIR
 
 
 @dataclass
@@ -36,3 +38,11 @@ def evaluate(expected_words: List[str], typed_words: List[str], spent_time: floa
         ) * 100
 
     return ev_res
+
+
+def _analyze_previous_result() -> EvaluationResult:
+        pass
+
+
+def compare_results(ev_res_prev: EvaluationResult, ev_res_curr: EvaluationResult) -> EvaluationResult:
+    pass
