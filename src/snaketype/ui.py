@@ -6,8 +6,11 @@ from .core import EvaluationResult
 def print_result(ev_res: EvaluationResult) -> None:   
     if ev_res.words_count_mismatch:
         print("Word count mismatch!\n",
-              f"Expected: {colorize(str(len(ev_res.expected_words)), fg=Color.FG_GREEN)}\n",
-              f"Got: {colorize(str(len(ev_res.typed_words)), fg=Color.FG_RED)}")
+              f"Expected: {colorize(str(len(ev_res.expected_words)), 
+                                    fg=Color.FG_GREEN)}\n",
+              
+              f"Got: {colorize(str(len(ev_res.typed_words)), 
+                               fg=Color.FG_RED)}")
 
         sys.exit(0)
 
@@ -18,13 +21,17 @@ def print_result(ev_res: EvaluationResult) -> None:
     _print_borders(ev_res.expected_words)
 
     if ev_res.mistakes_count != 0:
-        mistake_word: str = "mistake" if ev_res.mistakes_count == 1 else "mistakes"
+        mistake: str = "mistake" if ev_res.mistakes_count == 1 else "mistakes"
         for i in range(len(ev_res.mistaken_expected_words)):
             print("You made a mistake in word: ",
-                   colorize(ev_res.typed_mistakes[i], fg=Color.FG_RED),
+                   colorize(ev_res.typed_mistakes[i], 
+                            fg=Color.FG_RED),
                    "->",
-                   colorize(ev_res.mistaken_expected_words[i], fg=Color.FG_GREEN))
-        print(colorize(f"You made {ev_res.mistakes_count} {mistake_word}!", fg=Color.FG_YELLOW))
+                   colorize(ev_res.mistaken_expected_words[i], 
+                            fg=Color.FG_GREEN))
+        
+        print(colorize(f"You made {ev_res.mistakes_count} {mistake}!", 
+                       fg=Color.FG_YELLOW))
 
     else:
         print(colorize("You made zero mistakes!", fg=Color.FG_GREEN))

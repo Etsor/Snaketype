@@ -9,6 +9,7 @@ from .core import EvaluationResult, evaluate
 from .filemanager import save_result
 from .utils import has_arg
 
+
 def main() -> None:
     save_res: bool = True
     if has_arg("-ws") or has_arg("--without-saving"):
@@ -23,11 +24,15 @@ def main() -> None:
     words: List[str] = []
 
     try:
-        words = requests.get(f"https://random-word-api.vercel.app/api?words={words_count}", timeout=3).json()
+        words = requests.get("https://random-word-api.vercel.app/api?words" + 
+                             f"{words_count}", timeout=3).json()
+
     except Exception:
-        print(colorize("Looks like you are offline!\nUsing fallback list..", fg=Color.FG_YELLOW))
-        words = get_fallback_words(words_count)
+        print(colorize("Looks like you are offline!\nUsing fallback list..", 
+                       fg=Color.FG_YELLOW))
         
+        words = get_fallback_words(words_count)
+     
     print_words(words)
 
     start_time: datetime = datetime.now()

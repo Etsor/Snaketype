@@ -26,7 +26,10 @@ def save_result(ev_res: EvaluationResult) -> None:
     try:
         os.makedirs(f"{RESULTS_DIR}")
     except OSError:
-        print(colorize(f"Error occured while creating \"{RESULTS_DIR}\" directory...\nTry to run app with \"-ws\" flag", fg=Color.FG_RED))
+        print(colorize("Error occured while creating" + 
+                       f"\"{RESULTS_DIR}\" directory...\n" +
+                       "Try to run app with \"-ws\" flag", 
+                       fg=Color.FG_RED))
         sys.exit(0)
     
     with open(f"{RESULTS_DIR}/typing_test_{timestamp_str}.json", "a") as f:

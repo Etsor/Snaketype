@@ -17,8 +17,13 @@ class EvaluationResult:
     wpm: float = 0.0
 
 
-def evaluate(expected_words: List[str], typed_words: List[str], spent_time: float) -> EvaluationResult:
-    ev_res: EvaluationResult = EvaluationResult(expected_words=expected_words, typed_words=typed_words, spent_time=spent_time)
+def evaluate(expected_words: List[str], 
+             typed_words: List[str], 
+             spent_time: float) -> EvaluationResult:
+    
+    ev_res: EvaluationResult = EvaluationResult(expected_words=expected_words, 
+                                                typed_words=typed_words, 
+                                                spent_time=spent_time)
 
     if len(expected_words) != len(typed_words):
         ev_res.words_count_mismatch = True
@@ -32,17 +37,16 @@ def evaluate(expected_words: List[str], typed_words: List[str], spent_time: floa
 
         characters_typed: int = sum(len(word) for word in ev_res.typed_words)
         ev_res.wpm = (characters_typed / 5) / (spent_time / 60)
-        ev_res.accuracy = (
-            (len(ev_res.expected_words) - ev_res.mistakes_count) 
-            / len(ev_res.expected_words)
-        ) * 100
+        ev_res.accuracy = ((len(ev_res.expected_words) - ev_res.mistakes_count) 
+                           / len(ev_res.expected_words)) * 100
 
     return ev_res
 
 
 def _analyze_previous_result() -> EvaluationResult:
-        pass
+    pass
 
 
-def compare_results(ev_res_prev: EvaluationResult, ev_res_curr: EvaluationResult) -> EvaluationResult:
+def compare_results(ev_res_prev: EvaluationResult, 
+                    ev_res_curr: EvaluationResult) -> EvaluationResult:
     pass
