@@ -8,4 +8,4 @@ pip install .
 snaketype
 ```
 
-<img src="res/example.png" width="300">
+<img src="res/example.png" width="400">
