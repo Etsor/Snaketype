@@ -1,7 +1,7 @@
 from typing import List
 from dataclasses import dataclass, field
+import os
 import json
-from filemanager import RESULTS_DIR
 
 
 @dataclass
@@ -16,6 +16,13 @@ class EvaluationResult:
     typed_mistakes: List[str] = field(default_factory=list[str])
     wpm: float = 0.0
 
+
+@dataclass
+class ResultsDifference:
+    wpm_diff: float = 0.0
+    accuracy_diff: float = 0.0
+    mistakes_diff: float = 0.0
+        
 
 def evaluate(expected_words: List[str], 
              typed_words: List[str], 
@@ -43,10 +50,41 @@ def evaluate(expected_words: List[str],
     return ev_res
 
 
-def _analyze_previous_result() -> EvaluationResult:
-    pass
+def compare_results(ev_res_1: EvaluationResult, 
+                    ev_res_2: EvaluationResult) -> ResultsDifference:
+    
+    return ResultsDifference(ev_res_1.wpm - ev_res_2.wpm,
+                             ev_res_1.accuracy - ev_res_2.accuracy,
+                             ev_res_1.mistakes_count - ev_res_2.mistakes_count)
 
 
-def compare_results(ev_res_prev: EvaluationResult, 
-                    ev_res_curr: EvaluationResult) -> EvaluationResult:
-    pass
+def find_prev_result() -> str:
+    from .io.filemanager import RESULTS_DIR, PREFIX
+    
+    prev_res_fn: str = ""
+    prev_res_f_mod_time: float = 0.0
+
+    if not os.path.exists(RESULTS_DIR):
+        return ""
+
+    for root, _, files in os.walk(RESULTS_DIR):
+        for name in files:
+            if name.startswith(PREFIX) and name.endswith(".json"):
+                full_path = os.path.join(root, name)
+                mod_time = os.path.getmtime(full_path)
+                if mod_time > prev_res_f_mod_time:
+                    prev_res_f_mod_time = mod_time
+                    prev_res_fn = full_path
+
+    return prev_res_fn
+
+
+def analyze_prev_result(prev_res_fn: str) -> EvaluationResult:
+    prev_res = ""
+
+    with open(prev_res_fn, "r") as f:
+        prev_res = json.load(f)
+
+    return EvaluationResult(wpm=prev_res["wpm"],
+                            accuracy=prev_res["accuracy"],
+                            mistakes_count=prev_res["mistakes_count"])        
