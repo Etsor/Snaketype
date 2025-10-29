@@ -22,14 +22,14 @@ class ResultsDifference:
     wpm_diff: float = 0.0
     accuracy_diff: float = 0.0
     mistakes_diff: float = 0.0
-        
 
-def evaluate(expected_words: List[str], 
-             typed_words: List[str], 
+
+def evaluate(expected_words: List[str],
+             typed_words: List[str],
              spent_time: float) -> EvaluationResult:
-    
-    ev_res: EvaluationResult = EvaluationResult(expected_words=expected_words, 
-                                                typed_words=typed_words, 
+
+    ev_res: EvaluationResult = EvaluationResult(expected_words=expected_words,
+                                                typed_words=typed_words,
                                                 spent_time=spent_time)
 
     if len(expected_words) != len(typed_words):
@@ -44,15 +44,15 @@ def evaluate(expected_words: List[str],
 
         characters_typed: int = sum(len(word) for word in ev_res.typed_words)
         ev_res.wpm = (characters_typed / 5) / (spent_time / 60)
-        ev_res.accuracy = ((len(ev_res.expected_words) - ev_res.mistakes_count) 
+        ev_res.accuracy = ((len(ev_res.expected_words) - ev_res.mistakes_count)
                            / len(ev_res.expected_words)) * 100
 
     return ev_res
 
 
-def compare_results(ev_res_1: EvaluationResult, 
+def compare_results(ev_res_1: EvaluationResult,
                     ev_res_2: EvaluationResult) -> ResultsDifference:
-    
+
     return ResultsDifference(ev_res_1.wpm - ev_res_2.wpm,
                              ev_res_1.accuracy - ev_res_2.accuracy,
                              ev_res_1.mistakes_count - ev_res_2.mistakes_count)
@@ -60,7 +60,7 @@ def compare_results(ev_res_1: EvaluationResult,
 
 def find_prev_result() -> str:
     from .io.filemanager import RESULTS_DIR, PREFIX
-    
+
     prev_res_fn: str = ""
     prev_res_f_mod_time: float = 0.0
 
@@ -87,4 +87,4 @@ def analyze_prev_result(prev_res_fn: str) -> EvaluationResult:
 
     return EvaluationResult(wpm=prev_res["wpm"],
                             accuracy=prev_res["accuracy"],
-                            mistakes_count=prev_res["mistakes_count"])        
+                            mistakes_count=prev_res["mistakes_count"])

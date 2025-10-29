@@ -1,18 +1,21 @@
 from typing import List
 from pytermcolors import colorize, Color
-from ..core import EvaluationResult, ResultsDifference, analyze_prev_result, compare_results
+from ..core import (
+     EvaluationResult,
+     ResultsDifference,
+     analyze_prev_result,
+     compare_results
+)
 
-def print_result(ev_res: EvaluationResult, prev_res_fn: str) -> None:   
+
+def print_result(ev_res: EvaluationResult, prev_res_fn: str) -> None:
     if ev_res.words_count_mismatch:
-        print("\nWord count mismatch!",
-              f"\nExpected: {colorize(str(len(ev_res.expected_words)), 
-                                    fg=Color.FG_GREEN)}",
-              
-              f"\nGot: {colorize(str(len(ev_res.typed_words)), 
-                               fg=Color.FG_RED)}")
+        print("\nWord count mismatch!"
+              f"\nExpected: {colorize(str(len(ev_res.expected_words)), fg=Color.FG_GREEN)}"
+              f"\nGot: {colorize(str(len(ev_res.typed_words)), fg=Color.FG_RED)}")
         return
-    
-    _print_borders(ev_res.expected_words)   
+
+    _print_borders(ev_res.expected_words)
     print(f"Spent time: {ev_res.spent_time:.2f}")
     print(f"WPM: {ev_res.wpm:.2f}")
     print(f"Accuracy: {ev_res.accuracy:.2f}%")
@@ -22,13 +25,13 @@ def print_result(ev_res: EvaluationResult, prev_res_fn: str) -> None:
         mistake: str = "mistake" if ev_res.mistakes_count == 1 else "mistakes"
         for i in range(len(ev_res.mistaken_expected_words)):
             print("You made a mistake in word:",
-                   colorize(ev_res.typed_mistakes[i], 
+                   colorize(ev_res.typed_mistakes[i],
                             fg=Color.FG_RED),
                    "->",
-                   colorize(ev_res.mistaken_expected_words[i], 
+                   colorize(ev_res.mistaken_expected_words[i],
                             fg=Color.FG_GREEN))
-        
-        print(colorize(f"You made {ev_res.mistakes_count} {mistake}!", 
+
+        print(colorize(f"You made {ev_res.mistakes_count} {mistake}!",
                        fg=Color.FG_YELLOW))
 
     else:
@@ -82,6 +85,7 @@ def print_result(ev_res: EvaluationResult, prev_res_fn: str) -> None:
                 colorize(f"\n{prev_ev_res.mistakes_count}", Color.FG_GREEN),
                 "->",
                 colorize(f"{ev_res.mistakes_count}", Color.FG_RED))
+        _print_borders(ev_res.expected_words)
 
 
 def print_words(words: List[str]) -> None:
@@ -90,7 +94,7 @@ def print_words(words: List[str]) -> None:
 
 def _print_borders(words: List[str]) -> None:
     DEFAULT_BORDER_LEN: int = 48
-    border_char = "-"    
+    border_char = "-"
     words_str: str = " ".join(words)
     if len(words_str) > DEFAULT_BORDER_LEN:
         print(border_char * len(words_str))
