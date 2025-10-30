@@ -22,25 +22,25 @@ def main() -> None:
             if words_count < 1 or words_count > 20:
                 print(colorize("Invalid count of words", fg=Color.FG_RED))
                 return
-        
+
         except ValueError:
             print(colorize("Invalid input! Please enter a number", fg=Color.FG_RED))
             return
-        
+
         print()
 
         words: List[str] = []
 
         try:
-            words = requests.get("https://random-word-api.vercel.app/api?words=" 
-                                f"{words_count}", timeout=3).json()
+            words = requests.get("https://random-word-api.vercel.app/api?words="
+                                 f"{words_count}", timeout=3).json()
 
         except Exception:
-            print(colorize("Looks like you are offline!\nUsing fallback list..", 
-                        fg=Color.FG_YELLOW))
-            
+            print(colorize("Looks like you are offline!\nUsing fallback list..",
+                           fg=Color.FG_YELLOW))
+
             words = get_fallback_words(words_count)
-        
+
         print_words(words)
 
         start_time: datetime = datetime.now()
@@ -55,10 +55,11 @@ def main() -> None:
 
         if save_res:
             save_result(ev_res)
-    
+
     except KeyboardInterrupt:
         print(colorize("\nExiting... Bye!", fg=Color.FG_GREEN, bold=True))
         exit(130)
+
 
 if __name__ == "__main__":
     main()

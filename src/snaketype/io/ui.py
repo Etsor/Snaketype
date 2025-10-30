@@ -1,10 +1,10 @@
 from typing import List
 from pytermcolors import colorize, Color
 from ..core import (
-     EvaluationResult,
-     ResultsDifference,
-     analyze_prev_result,
-     compare_results
+    EvaluationResult,
+    ResultsDifference,
+    analyze_prev_result,
+    compare_results
 )
 
 
@@ -25,11 +25,11 @@ def print_result(ev_res: EvaluationResult, prev_res_fn: str) -> None:
         mistake: str = "mistake" if ev_res.mistakes_count == 1 else "mistakes"
         for i in range(len(ev_res.mistaken_expected_words)):
             print("You made a mistake in word:",
-                   colorize(ev_res.typed_mistakes[i],
-                            fg=Color.FG_RED),
-                   "->",
-                   colorize(ev_res.mistaken_expected_words[i],
-                            fg=Color.FG_GREEN))
+                  colorize(ev_res.typed_mistakes[i],
+                           fg=Color.FG_RED),
+                  "->",
+                  colorize(ev_res.mistaken_expected_words[i],
+                           fg=Color.FG_GREEN))
 
         print(colorize(f"You made {ev_res.mistakes_count} {mistake}!",
                        fg=Color.FG_YELLOW))
@@ -41,50 +41,48 @@ def print_result(ev_res: EvaluationResult, prev_res_fn: str) -> None:
     if prev_res_fn != "":
         prev_ev_res: EvaluationResult = analyze_prev_result(prev_res_fn)
         res_diff: ResultsDifference = compare_results(ev_res, prev_ev_res)
-        
+
         if res_diff.wpm_diff > 0:
             print("Your WPM improved by "
-                f"{res_diff.wpm_diff:.2f} points!",
-                colorize(f"\n{prev_ev_res.wpm:.2f}", Color.FG_RED),
-                "->",
-                colorize(f"{ev_res.wpm:.2f}", Color.FG_GREEN))
-        
+                  f"{res_diff.wpm_diff:.2f} points!",
+                  colorize(f"\n{prev_ev_res.wpm:.2f}", Color.FG_RED),
+                  "->",
+                  colorize(f"{ev_res.wpm:.2f}", Color.FG_GREEN))
+
         elif res_diff.wpm_diff < 0:
             print("Your previous WPM was better by "
-                f"{abs(res_diff.wpm_diff):.2f} points:",
-                colorize(f"\n{prev_ev_res.wpm:.2f}", Color.FG_GREEN),
-                "->",
-                colorize(f"{ev_res.wpm:.2f}", Color.FG_RED))
+                  f"{abs(res_diff.wpm_diff):.2f} points:",
+                  colorize(f"\n{prev_ev_res.wpm:.2f}", Color.FG_GREEN),
+                  "->",
+                  colorize(f"{ev_res.wpm:.2f}", Color.FG_RED))
 
-        
         if res_diff.accuracy_diff > 0:
             print("Your accuracy improved by "
-                f"{res_diff.accuracy_diff:.2f}%!",
-                colorize(f"\n{prev_ev_res.accuracy:.2f}", Color.FG_RED),
-                "->",
-                colorize(f"{ev_res.accuracy:.2f}", Color.FG_GREEN))
-        
+                  f"{res_diff.accuracy_diff:.2f}%!",
+                  colorize(f"\n{prev_ev_res.accuracy:.2f}", Color.FG_RED),
+                  "->",
+                  colorize(f"{ev_res.accuracy:.2f}", Color.FG_GREEN))
+
         elif res_diff.accuracy_diff < 0:
             print("Your previous accuracy was better by "
-                f"{abs(res_diff.accuracy_diff):.2f}%",
-                colorize(f"\n{prev_ev_res.accuracy:.2f}", Color.FG_GREEN),
-                "->",
-                colorize(f"{ev_res.accuracy:.2f}", Color.FG_RED))
+                  f"{abs(res_diff.accuracy_diff):.2f}%",
+                  colorize(f"\n{prev_ev_res.accuracy:.2f}", Color.FG_GREEN),
+                  "->",
+                  colorize(f"{ev_res.accuracy:.2f}", Color.FG_RED))
 
-        
         if res_diff.mistakes_diff < 0:
             print("You made "
-                f"{abs(res_diff.mistakes_diff)} fewer mistakes than before!",
-                colorize(f"\n{prev_ev_res.mistakes_count}", Color.FG_RED),
-                "->",
-                colorize(f"{ev_res.mistakes_count}", Color.FG_GREEN))
-        
+                  f"{abs(res_diff.mistakes_diff)} fewer mistakes than before!",
+                  colorize(f"\n{prev_ev_res.mistakes_count}", Color.FG_RED),
+                  "->",
+                  colorize(f"{ev_res.mistakes_count}", Color.FG_GREEN))
+
         elif res_diff.mistakes_diff > 0:
             print("You made "
-                f"{res_diff.mistakes_diff} more mistakes than before",
-                colorize(f"\n{prev_ev_res.mistakes_count}", Color.FG_GREEN),
-                "->",
-                colorize(f"{ev_res.mistakes_count}", Color.FG_RED))
+                  f"{res_diff.mistakes_diff} more mistakes than before",
+                  colorize(f"\n{prev_ev_res.mistakes_count}", Color.FG_GREEN),
+                  "->",
+                  colorize(f"{ev_res.mistakes_count}", Color.FG_RED))
         _print_borders(ev_res.expected_words)
 
 
